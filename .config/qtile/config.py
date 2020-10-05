@@ -104,22 +104,35 @@ keys = [
         desc="Rofi"),
 ]
  
-groups = [Group(i) for i in "12345"]
+# groups = [Group(i) for i in "12345"]
  
-for i in groups:
-    keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+# for i in groups:
+#     keys.extend([
+#         # mod1 + letter of group = switch to group
+#         Key([mod], i.name, lazy.group[i.name].toscreen(),
+#             desc="Switch to group {}".format(i.name)),
  
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name)),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        #     desc="move focused window to group {}".format(i.name)),
-    ])
+#         # mod1 + shift + letter of group = switch to & move focused window to group
+#         Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
+#             desc="Switch to & move focused window to group {}".format(i.name)),
+#         # Or, use below if you prefer not to switch to that group.
+#         # # mod1 + shift + letter of group = move focused window to group
+#         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+#         #     desc="move focused window to group {}".format(i.name)),
+#     ])
+
+group_names = [("BASH", {'layout': 'monadtall'}),
+               ("CODE", {'layout': 'monadtall'}),
+               ("WWW", {'layout': 'monadtall'}),
+               ("FILES", {'layout': 'monadtall'}),
+               ("FLOAT", {'layout': 'monadtall'})]
+
+groups = [Group(name, **kwargs) for name, kwargs in group_names]
+
+for i, (name, kwargs) in enumerate(group_names, 1):
+    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
+    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
+
  
 MONAD_CONFS = dict(
     align=0,
@@ -170,12 +183,9 @@ screens = [
         top=bar.Bar( #Change to bottom=**** for bottom bar
             [
                 widget.TextBox(
-                    text="❯",
+                    text="❯❯❯",
                     foreground="#ffffff",
                     background="#e56551",
-                ),
-                widget.CurrentLayout(
-                    background=COLORS_PALLET1[0],
                 ),
                 widget.GroupBox(
                     background=COLORS_PALLET1[2],

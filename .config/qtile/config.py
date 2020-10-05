@@ -185,24 +185,6 @@ screens = [
                 widget.WindowName(
                     background=COLORS_PALLET1[1],
                 ),
-                widget.Net(
-                    background="#542491",
-                    interface='enp0s3',
-                    update_interval=2,
-                    format="NET: {down} ↓↑{up}",
-                    padding=10,
-                ),
-                widget.Memory(
-                    background="#1f471e",
-                    format="RAM: {MemUsed}M/{MemTotal}M",
-                    padding=20,
-                ),
-                widget.CPU(
-                    background="#515699",
-                    padding=20,
-                    update_interval=2,
-                    format="CPU: {load_percent}%",
-                ),
                 widget.Clock(
                     format='%a, %d %B %I:%M %p',
                     background=COLORS_PALLET1[3],
